@@ -1,13 +1,10 @@
 // - UI allowing users to feed the animals a pre-determined meal from a select menu
-// - UI allowing users to remove an animal
 // - A “feed” where all actions are printed to the page (formerly printed to the console).  Actions are: animal fed,
 // animal sleep, animal created, animal removed.  Clear the feed (start fresh, don’t append to it) every time
 // feedAnimals() is called.
 // - A separate UML diagram showing your objects and their relationships
 // - Add bootstrap or w3.css styling to your page
 //   You’ll need to make edits to your classes in order to write statements to the page rather than to the console.
-
-//REMEMBER TO UPLOAD TO GITHUB AFTER FINAL EXAM SO YOU CAN WORK AT HOME
 
 //Features for HTML:
     //Title <h1>
@@ -64,13 +61,15 @@ function run() {
 
     allCreatures = [pickett, cecily, pip, billy, frank, daniel];
     listCreatures();
-    tracker = 6;
+    tracker = allCreatures.length;
 }
 
 function listCreatures() {
     var nameSpecies = creatureListArrays();
     var names = nameSpecies[0];
     var species = nameSpecies[1];
+
+    resetTable();
 
     for (var i = 0; i < allCreatures.length; i++) {
         var currentName = names[i];
@@ -126,6 +125,28 @@ function addCreature() {
 function feedCreatures() {
     // feedAnimals() - a function which uses jQuery .val() to grab the food value (a string) from the page and feed it to
     // each animal.  Results write out in the log.
+    var mealNum = $("#menu").val();
+    var food;
+    switch (mealNum) {
+        case 1:
+            food = "";
+            break;
+        case 2:
+            food = "";
+            break;
+        case 3:
+            food = "";
+            break;
+        case 4:
+            food = "";
+            break;
+        case 5:
+            food = "";
+            break;
+        case 6:
+            food = "";
+            break;
+    }
 }
 
 function creatureListArrays() {
@@ -139,22 +160,20 @@ function creatureListArrays() {
     return [names, types];
 }
 
-function releaseCreature(id) {
+function releaseCreature() {
+    console.log(allCreatures);
     var creatureName = $("#currentCreatureDrop").val();
     for (var i = 0; i < allCreatures.length; i++) {
         if(allCreatures[i].name == creatureName) {
-            allCreatures.splice(i, i + 1);
+            allCreatures.splice(i, 1);
         }
     }
-    console.log(allCreatures);
-    var register = tracker;
-    tracker = 0;
-    $("#creatureTable").empty();
-    $("#currentCreatureDrop").empty();
-    $("#creatureTable").append("<tr><th>Creature Name</th><th>Creature Species</th></tr>");
+    creaturePopulation--;
+    tracker = 1;
+    resetTable();
     listCreatures();
-    tracker = register;
-    //can't add creatures after releasing -- fix this
+    tracker = allCreatures.length;
+    console.log(allCreatures);
 }
 
 function checkName(name) {
@@ -170,6 +189,12 @@ function checkName(name) {
         }
     }
     return confirmation;
+}
+
+function resetTable() {
+    $("#creatureTable").empty();
+    $("#currentCreatureDrop").empty();
+    $("#creatureTable").append("<tr><th>Creature Name</th><th>Creature Species</th></tr>");
 }
 
 class Magizoologist {
@@ -194,15 +219,12 @@ class Creature {
     }
 
     sleep() {
-        console.log(this.name + " sleeps for 8 hours");
+        $("#theLatest").append("<div>" + this.name + " sleeps </div>");
     }
 
     eat(food) {
-        console.log(this.name + " eats " + food);
         if (food == this.favoriteFood) {
-            console.log("YUM!!! " + this.name + " wants more " + food);
-        } else {
-            this.sleep();
+            $("#theLatest").append("<div>" + this.name + " eats " + this.favoriteFood + "</div>");
         }
     }
 
@@ -213,48 +235,108 @@ class Creature {
 
 class Bowtruckle extends Creature {
     constructor(name) {
-        super(name, "");
+        super(name, "woodlice");
     }
-    //Eating habits:
-    //Sleeping habits:
+
+    sleep() {
+        $("#theLatest").append("<div>" + this.name + " lounges in a tree</div>");
+    }
+
+    eat(food) {
+        if (food == this.favoriteFood) {
+            $("#theLatest").append("<div>" + this.name + " eats " + this.favoriteFood + "</div>");
+        } else if (food == "insects") {
+            $("#theLatest").append("<div>" + this.name + " eats insects</div>");
+        } else {
+            $("#theLatest").append("<div>" + this.name + "bares their teeth</div>");
+        }
+    }
 }
 
 class Erumpent extends Creature {
     constructor(name) {
-        super(name, "");
+        super(name, "grains");
     }
-    //Eating habits:
-    //Sleeping habits:
+
+    sleep() {
+        $("#theLatest").append("<div>" + this.name + " rolls over happily and sleeps for a fortnight</div>");
+    }
+
+    eat(food) {
+        if (food == this.favoriteFood) {
+            $("#theLatest").append("<div>" + this.name + " eats " + this.favoriteFood + "</div>");
+        } else {
+            $("#theLatest").append("<div>" + this.name + " explodes the " + this.favoriteFood + "</div>");
+        }
+    }
 }
 
 class Niffler extends Creature {
     constructor(name) {
-        super(name, "");
+        super(name, "shiny things");
     }
-    //Eating habits:
-    //Sleeping habits:
+
+    sleep() {
+        $("#theLatest").append("<div>" + this.name + " cuddles with shiny things</div>");
+    }
+
+    eat(food) {
+        if (food == this.favoriteFood) {
+            $("#theLatest").append("<div>" + this.name + " doesn't eat. It very much enjoys cuddling with the " + this.favoriteFood + "</div>");
+        }
+    }
 }
 
 class Billywig extends Creature {
     constructor(name) {
-        super(name, "");
+        super(name, "beeswax");
     }
-    //Eating habits: Stings if not good food
-    //Sleeping habits:
+
+    sleep() {
+        $("#theLatest").append("<div>" + this.name + " flies off</div>");
+    }
+
+    eat(food) {
+        if (food == this.favoriteFood) {
+            $("#theLatest").append("<div>" + this.name + " eats " + this.favoriteFood + "</div>");
+        } else {
+
+        }
+    }
+    //Eating habits: stings if it eats anything but beeswax, but it'll eat anything; stinging
+    // makes the Magizoologist levitate for five minutes
 }
 
 class Thunderbird extends Creature {
     constructor(name) {
-        super(name, "");
+        super(name, "oarfish");
     }
-    //Eating habits:
-    //Sleeping habits:
+
+    sleep() {
+        $("#theLatest").append("<div>" + this.name + " sleeps with its head under its wing</div>");
+    }
+
+    eat(food) {
+        if (food == this.favoriteFood) {
+            $("#theLatest").append("<div>" + this.name + " eats " + this.favoriteFood + "</div>");
+        }
+    }
 }
 
 class Demiguise extends Creature {
     constructor(name) {
-        super(name, "");
+        super(name, "celery");
     }
-    //Eating habits:
-    //Sleeping habits: Turns invisible
+
+    sleep() {
+        $("#theLatest").append("<div>" + this.name + " turns invisible</div>");
+    }
+
+    eat(food) {
+        if (food == this.favoriteFood) {
+            $("#theLatest").append("<div>" + this.name + " eats " + this.favoriteFood + "</div>");
+        } else if (food == "insects") {
+            $("#theLatest").append("<div>" + this.name + " eats insects</div>");
+        }
+    }
 }
