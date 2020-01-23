@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fantastic Beasts</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="design.css">
+</head>
+<body>
+    <h1>Fantastic Beasts</h1>
+
+    <h3>Adding Creatures</h3>
+    <div class="byTheWay" id="btwAdding"></div>
+    <button class="actionButton" id= "showOnAdd">Add a Creature</button>
+    <input class = "onAdd" id="nameIt">
+    <select class = "onAdd" id = "addCreatureMenu">
+        <option value = "1" id = "bowtruckle">Bowtruckle</option>
+        <option value = "2" id = "erumpent">Erumpent</option>
+        <option value = "3" id = "niffler">Niffler</option>
+        <option value = "4" id = "billywig">Billywig</option>
+        <option value = "5" id = "thunderbird">Thunderbird</option>
+        <option value = "6" id = "demiguise">Demiguise</option>
+    </select>
+    <button class="onAdd" id = "addingButton" onclick="addCreature()">Add Creature</button>
+
+    <h3>Feeding Creatures</h3>
+    <div class="byTheWay" id="btwFeeding"></div>
+    <select>
+        <option value="0">Meal 1</option>
+        <option value="1">Meal 2</option>
+        <option value="2">Meal 3</option>
+        <option value="3">Meal 4</option>
+        <option value="4">Meal 5</option>
+        <option value="5">Meal 6</option>
+    </select>
+    <button class="actionButton" onclick="feedCreatures()">Feed Creatures</button>
+
+    <h3>Index of Creatures</h3>
+    <div class="byTheWay" id="btwListing"></div>
+    <table id = "creatureTable" style="border: solid; width: 30%">
+        <tr>
+            <th>Creature Name</th>
+            <th>Creature Species</th>
+        </tr>
+    </table>
+    </div>
+
+    <h3>Releasing Creatures</h3>
+    <div class="byTheWay" id="btwReleasing"></div>
+    <select id = "currentCreatureDrop">
+    </select>
+    <button class = "actionButton" onclick="releaseCreature()">Release This Creature</button>
+</body>
+</html>
