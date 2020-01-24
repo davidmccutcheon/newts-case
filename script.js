@@ -58,6 +58,7 @@ function run() {
     var billy = new Billywig("Billy");
     var frank = new Thunderbird("Frank");
     var daniel = new Demiguise("Daniel");
+    var newt = new Magizoologist("Newt");
 
     allCreatures = [pickett, cecily, pip, billy, frank, daniel];
     listCreatures();
@@ -123,30 +124,35 @@ function addCreature() {
 }
 
 function feedCreatures() {
-    // feedAnimals() - a function which uses jQuery .val() to grab the food value (a string) from the page and feed it to
+    // feedAnimals() - a function which uses jQuery .val() to grab the food value (a string) from the page and feeds it to
     // each animal.  Results write out in the log.
+    $("#theLatest").clear();
     var mealNum = $("#menu").val();
     var food;
     switch (mealNum) {
         case 1:
-            food = "";
+            food = "woodlice";
             break;
         case 2:
-            food = "";
+            food = "grains";
             break;
         case 3:
-            food = "";
+            food = "shiny things";
             break;
         case 4:
-            food = "";
+            food = "beeswax";
             break;
         case 5:
-            food = "";
+            food = "oarfish";
             break;
         case 6:
-            food = "";
+            food = "insects";
+            break;
+        case 7:
+            food = "celery";
             break;
     }
+    newt.feedCreatures(allCreatures, food);
 }
 
 function creatureListArrays() {
@@ -203,16 +209,21 @@ class Magizoologist {
     }
 
     feedCreatures(creatures, food) {
-        console.log(this.name + " is feeding " + food + " to " + creatures.length + " of " + Creature.getPopulation() + " total creatures");
+        $("theLatest").append("<div>" + this.name + " feeds " + food + " to " + creatures.length + " of " + Creature.getPopulation() + " total creatures </div>");
         for (var i = 0; i < creatures.length; i++) {
             creatures[i].eat(food);
         }
+    }
+    
+    getStung() {
+        $("#theLatest").append("<div>" + this.name + " levitates </div>");
+        $("#theLatest").append("<div>" + this.name + " hangs in the air for five minutes </div>");
     }
 }
 
 class Creature {
 
-    constructor(name,favoriteFood) {
+    constructor(name, favoriteFood) {
         this.name = name;
         this.favoriteFood = favoriteFood;
         creaturePopulation++;
@@ -225,6 +236,10 @@ class Creature {
     eat(food) {
         if (food == this.favoriteFood) {
             $("#theLatest").append("<div>" + this.name + " eats " + this.favoriteFood + "</div>");
+            $("#theLatest").append("<div>" + this.name + " loves " + this.favoriteFood + "!</div>");
+        } else {
+            $("#theLatest").append("<div>" + this.name + " eats " + this.favoriteFood + "</div>");
+            this.sleep();
         }
     }
 
@@ -282,7 +297,9 @@ class Niffler extends Creature {
 
     eat(food) {
         if (food == this.favoriteFood) {
-            $("#theLatest").append("<div>" + this.name + " doesn't eat. It very much enjoys cuddling with the " + this.favoriteFood + "</div>");
+            $("#theLatest").append("<div>" + this.name + " doesn't eat. They very much enjoy cuddling with the " + this.favoriteFood + "</div>");
+        } else {
+            $("#theLatest").append("<div>" + this.name + " doesn't enjoy " + food + "</div>");
         }
     }
 }
@@ -300,11 +317,10 @@ class Billywig extends Creature {
         if (food == this.favoriteFood) {
             $("#theLatest").append("<div>" + this.name + " eats " + this.favoriteFood + "</div>");
         } else {
-
+            $("#theLatest").append("<div>" + this.name + " stings Newt </div>");
+            newt.getStung();
         }
     }
-    //Eating habits: stings if it eats anything but beeswax, but it'll eat anything; stinging
-    // makes the Magizoologist levitate for five minutes
 }
 
 class Thunderbird extends Creature {
@@ -313,12 +329,15 @@ class Thunderbird extends Creature {
     }
 
     sleep() {
-        $("#theLatest").append("<div>" + this.name + " sleeps with its head under its wing</div>");
+        $("#theLatest").append("<div>" + this.name + " goes to sleep with its head under its wing</div>");
     }
 
     eat(food) {
         if (food == this.favoriteFood) {
             $("#theLatest").append("<div>" + this.name + " eats " + this.favoriteFood + "</div>");
+        } else {
+            $("#theLatest").append("<div>" + this.name + " sniffs at the " + food + "</div>");
+            this.sleep();
         }
     }
 }
@@ -337,6 +356,9 @@ class Demiguise extends Creature {
             $("#theLatest").append("<div>" + this.name + " eats " + this.favoriteFood + "</div>");
         } else if (food == "insects") {
             $("#theLatest").append("<div>" + this.name + " eats insects</div>");
+        } else {
+            $("#theLatest").append("<div>" + this.name + " sniffs at the " + food + "</div>");
+            this.sleep();
         }
     }
 }
